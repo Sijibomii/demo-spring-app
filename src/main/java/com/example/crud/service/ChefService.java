@@ -9,4 +9,7 @@ import com.example.crud.service.base.BaseService;
 @Service
 public class ChefService extends BaseService<Chef, ChefDao>  {
     
+    // get chef by id
+
+    // complex queries
 }
