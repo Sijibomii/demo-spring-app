@@ -9,8 +9,8 @@ import com.example.crud.entity.Chef_;
 import com.example.crud.entity.Eatery;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import java.util.*;
 
-import java.util.List;
 
 
 // for some weired reasons this is used as an interface and is never impl in a real class
@@ -32,6 +32,8 @@ public interface ChefDao extends BaseDao<Chef> {
         @Param("username ") String username ,
         @Param("salary") int salary
     );
+
+
 
     interface specs {
         // with JPA metamodel

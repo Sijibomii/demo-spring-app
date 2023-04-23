@@ -1,0 +1,1 @@
+DTO should be used to transfer data from the service layer to the controller. Remove fields that should not be returned in controller

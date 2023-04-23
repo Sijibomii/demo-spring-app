@@ -6,7 +6,7 @@ import java.util.List;
 import javax.persistence.criteria.*;
 import org.springframework.data.domain.Sort;
 
-// QueryBuilderUtils
+// QueryBuilderUtils 
 public class Criteria<T> implements Specification<T>{
     
     private List<Criterion> criteria = new ArrayList<Criterion>();

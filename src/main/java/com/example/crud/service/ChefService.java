@@ -65,12 +65,20 @@ public class ChefService extends BaseService<Chef, ChefDao>  {
         return dao.findAllByEatery(eatery);
     }
 
-    // using the @Query annotation
-    
-
+    public Chef updateChefSalary(Long id, Double salary){
+        Optional<Chef> optionalChef = findByIdUingJPA(id);
+        if(!optionalChef.isPresent()){
+            return null;
+        }
+        Chef ch = optionalChef.get();
+        ch.setSalary(salary);
+        Chef chef  = dao.save(ch);
+        return chef;
+    }
+    // using the @Query annotation (check chef Dao)
     
     // get all pagination
-
+    // use criteria classes(pagination to create queries)
 
     // complex queries
 }
