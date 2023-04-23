@@ -11,7 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.Date;
 
 @Entity
 @Data
@@ -30,7 +31,7 @@ public class Chef {
     // if we want to be able to access the chef associated with a eatry we use a onetomany mappring and make it bi directional
     @ManyToOne
     @JoinColumn(name="eatery_id")
-    private Eatery eatery;
+    private Eatery eatery; 
 
 
     @ManyToOne
@@ -38,7 +39,7 @@ public class Chef {
     private Meal meal;
 
     private double salary;
-
+ 
     @NotNull
     private boolean is_male;
 
@@ -48,5 +49,8 @@ public class Chef {
     @NotNull
     @Column(unique = true)
     private String username;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createdOn;
     
 }
