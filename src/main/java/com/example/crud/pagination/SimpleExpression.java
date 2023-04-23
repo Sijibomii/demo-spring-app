@@ -27,7 +27,7 @@ public class SimpleExpression implements Criterion {
     }
     // what i'm looking for
     @Override
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({ "rawtypes", "unchecked", "null" })
     public Predicate toPredicate(Root<?> root, CriteriaQuery<?> query,CriteriaBuilder builder) {
         //  property path String like "customer.order.price"
         Path expression = null;
