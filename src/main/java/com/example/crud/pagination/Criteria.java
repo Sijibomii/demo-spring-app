@@ -61,6 +61,7 @@ public class Criteria<T> implements Specification<T>{
         }
         return Sort.by(orders);
     }
+    
     // based on string entered it returns an sort order obj
     private static Sort.Order generateOrderStatic(String f) {
         Sort.Order order = null;
