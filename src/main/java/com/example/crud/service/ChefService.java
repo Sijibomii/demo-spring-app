@@ -11,5 +11,8 @@ public class ChefService extends BaseService<Chef, ChefDao>  {
     
     // get chef by id
 
+    // get all pagination
+
+
     // complex queries
 }

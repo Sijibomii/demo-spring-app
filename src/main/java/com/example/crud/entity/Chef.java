@@ -1,6 +1,7 @@
 package com.example.crud.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.*;
 // import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -10,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+
 
 @Entity
 @Data
@@ -34,4 +36,17 @@ public class Chef {
     @ManyToOne
     @JoinColumn(name="meal_id")
     private Meal meal;
+
+    private double salary;
+
+    @NotNull
+    private boolean is_male;
+
+    @NotNull
+    private boolean is_on_duty;
+
+    @NotNull
+    @Column(unique = true)
+    private String username;
+    
 }
