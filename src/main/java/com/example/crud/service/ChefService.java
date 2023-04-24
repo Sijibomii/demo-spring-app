@@ -6,26 +6,34 @@ import com.example.crud.entity.Chef;
 import com.example.crud.entity.Eatery;
 import com.example.crud.entity.Meal;
 import com.example.crud.entity.QChef;
+import com.example.crud.entity.QEatery;
 import com.example.crud.constants.PageModel;
 import com.example.crud.dao.ChefDao;
 import com.example.crud.service.base.BaseService;
-import com.example.crud.util.MessageResult;
-
 import lombok.Setter;
 import java.util.Optional;
 import com.example.crud.dao.ChefDao.specs;
 import javax.persistence.criteria.*;
+import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.Predicate;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.crud.pagination.PageResult;
 import com.example.crud.pagination.Restrictions;
+import com.querydsl.core.types.EntityPath;
+import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.SimpleExpression;
 import com.querydsl.jpa.impl.JPAQuery;
-
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Sort;
 import com.example.crud.pagination.Criteria;
+import com.example.crud.pagination.PageListMapResult;
+
 import org.springframework.data.domain.PageRequest;
 
 
@@ -164,77 +172,67 @@ public class ChefService extends BaseService<Chef, ChefDao>  {
         return dao.findAll(specification, pageRequest);
 	}
     
-    // HOW PREDICATE IS BEING USED
-    // this should prob be in the controller, no service method should return MessageResult 
-    public MessageResult pageQuery(PageModel pageModel, WithdrawRecordScreen screen) {
+    
+    // HOW ENTITY PATH AND EXPRESSION ARE BEEN USED. HOW queryDslForPageListResult IS BEEN USED(CHECK BASESERVICE)
+    @SuppressWarnings({"all"})
+    @Transactional(readOnly = true)
+    public void test() {
+        // query field
+        // it refused to take Expression so I had to sprecify a string expression
+        // remeber to import correctly not Expression and Predicate are from com.querydsl.core.types. not Java.util
+        List<Expression> expressions = new ArrayList<>();
+        expressions.add(QChef.chef.eatery.as("id"));
+   
+        List<EntityPath> entityPaths = new ArrayList<>();
+        entityPaths.add(QChef.chef);
+        entityPaths.add(QEatery.eatery);
+        // predicates: https://www.youtube.com/watch?v=pYx__ixuxGk
         List<Predicate> predicates = new ArrayList<>();
-        predicates.add(QWithdrawRecord.withdrawRecord.memberId.eq(QMember.member.id));
+        predicates.add(QChef.chef.eatery.eq(QEatery.eatery));
 
-        if (screen.getMemberId() != null) {
-            predicates.add(QWithdrawRecord.withdrawRecord.memberId.eq(screen.getMemberId()));
-        }
-
-        if ( !StringUtils.isEmpty(screen.getMobilePhone())){
-            Member member = memberService.findByPhone(screen.getMobilePhone());
-            predicates.add(QWithdrawRecord.withdrawRecord.memberId.eq(member.getId()));
-        }
-
-        if ( !StringUtils.isEmpty(screen.getOrderSn())){
-            predicates.add(QWithdrawRecord.withdrawRecord.transactionNumber.eq(screen.getOrderSn()));
-        }
-
-        if (screen.getStatus() != null) {
-            predicates.add(QWithdrawRecord.withdrawRecord.status.eq(screen.getStatus()));
-        }
-
-        if (screen.getIsAuto() != null) {
-            predicates.add(QWithdrawRecord.withdrawRecord.isAuto.eq(screen.getIsAuto()));
-        }
-
-        if (!StringUtils.isEmpty(screen.getAddress())) {
-            predicates.add(QWithdrawRecord.withdrawRecord.address.eq(screen.getAddress()));
-        }
-
-        if (!StringUtils.isEmpty(screen.getUnit())) {
-            predicates.add(QWithdrawRecord.withdrawRecord.coin.unit.equalsIgnoreCase(screen.getUnit()));
-        }
-
-        if (!StringUtils.isEmpty(screen.getAccount())) {
-            predicates.add(QMember.member.username.like("%" + screen.getAccount() + "%")
-                    .or(QMember.member.realName.like("%" + screen.getAccount() + "%")));
-        }
-
-        Page<WithdrawRecordVO> pageListMapResult = withdrawRecordService.joinFind(predicates, pageModel);
-        return success(pageListMapResult);
+        List<OrderSpecifier> orderSpecifierList = new ArrayList<>();
+        orderSpecifierList.add(QChef.chef.id.desc());
+        PageListMapResult pageListMapResult = super.queryDslForPageListResult(expressions, entityPaths, predicates, orderSpecifierList, Integer.valueOf(1), Integer.valueOf(10));
+        System.out.println(pageListMapResult);
     }
 
-    // HOW ENTITY PATH AND EXPRESSION ARE BEEN USED. HOW queryDslForPageListResult IS BEEN USED(CHECK BASESERVICE)
-    // @Transactional(readOnly = true)
-    // public void test() {
-    //     //查询字段
-    //     List<Expression> expressions = new ArrayList<>();
-    //     expressions.add(QWithdrawRecord.withdrawRecord.memberId.as("memberId"));
-    //     //查询表
-    //     List<EntityPath> entityPaths = new ArrayList<>();
-    //     entityPaths.add(QWithdrawRecord.withdrawRecord);
-    //     entityPaths.add(QMember.member);
-    //     //查询条件
-    //     List<Predicate> predicates = new ArrayList<>();
-    //     predicates.add(QWithdrawRecord.withdrawRecord.memberId.eq(QMember.member.id));
-    //     //排序
-    //     List<OrderSpecifier> orderSpecifierList = new ArrayList<>();
-    //     orderSpecifierList.add(QWithdrawRecord.withdrawRecord.id.desc());
-    //     PageListMapResult pageListMapResult = super.queryDslForPageListResult(expressions, entityPaths, predicates, orderSpecifierList, 1, 10);
-    //     System.out.println(pageListMapResult);
+    // using boolean expression
+    @SuppressWarnings({"all"})
+    public Page findAllChefsOnDuty(PageModel pageModel) {
+        BooleanExpression eq = QChef.chef.is_on_duty.eq(true);
+        return dao.findAll(eq, pageModel.getPageable());
+    }
+    // use the criteria class. that converts diff restrictions into predicates
+    @SuppressWarnings({"all"})
+    public Page findAllChefsOnDutyByEatery(Eatery eatery, PageModel pageModel) {
+        Criteria<Chef> specification = new Criteria<Chef>();
+        specification.add(Restrictions.eq("eatery", eatery, false));
+        specification.add(Restrictions.eq("is_on_duty", true, false));
+        return dao.findAll(specification, pageModel.getPageable());
+    }
 
-    // }
-
-    // TASK: USE THE queryDslForPageListResult(QueryDslContext qdc, Integer pageNo, Integer pageSize) OF THIS SIGNATURE 
-
-    // TASK: USE THE PageResult<T> queryDsl(Integer pageNo, Integer pageSize, List<Predicate> predicateList, 
-        // EntityPathBase<T> entityPathBase, List<OrderSpecifier> orderSpecifierList) METHOD
-
-    // TASK: USE queryOneDsl(Predicate predicate, EntityPathBase<T> entityPathBase) METHOD
+    // use projections to use booleanExpressions
+    @SuppressWarnings({"all"})
+    public Page<Chef> page(List<BooleanExpression> predicates, PageModel pageModel){
+        JPAQuery<Chef> query = queryFactory.select(
+                // projections help to define the columns on the entity that are returned and helps to prevent overhead and unnecessary queries
+                // https://www.youtube.com/watch?v=sLo6if5puC8
+                // https://dzone.com/articles/jpa-querydsl-projections, https://vard-lokkur.blogspot.com/2013/05/jpa-basic-projections.html
+                Projections.fields(Chef.class,
+                        QChef.chef.id.as("id"),
+                        QChef.chef.salary.as("salary"),
+                        QChef.chef.is_male.as("is_male"),
+                        QChef.chef.is_on_duty.as("is_on_duty"),
+                        QChef.chef.username.as("username"))
+        ).from(QChef.chef).where(predicates.toArray(new BooleanExpression[predicates.size()]));
+        // get order by page model
+        List<OrderSpecifier> orderSpecifiers = pageModel.getOrderSpecifiers() ;
+        query.orderBy(orderSpecifiers.toArray(new OrderSpecifier[orderSpecifiers.size()]));
+        long total = query.fetchCount() ;
+        query.offset(pageModel.getPageSize()*(pageModel.getPageNo()-1)).limit(pageModel.getPageSize());
+        List<Chef> list = query.fetch() ;
+        return new PageImpl<Chef>(list,pageModel.getPageable(),total);
+    }
 
     // Blaze stuff start by reading docs
 

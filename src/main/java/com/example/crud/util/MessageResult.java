@@ -3,7 +3,7 @@ package com.example.crud.util;
 import com.alibaba.fastjson.JSONObject;
 
 public class MessageResult {
-
+	@SuppressWarnings({"all"})
 	private Object data;
 	
     public MessageResult(int code , String msg){
