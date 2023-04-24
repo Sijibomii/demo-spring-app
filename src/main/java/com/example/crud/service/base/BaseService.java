@@ -45,11 +45,10 @@ public class BaseService<E, D extends BaseDao<E>> {
      * @return      
      */
     @Transactional(readOnly = true)
-    @SuppressWarnings({ "null" })
+    @SuppressWarnings({ "all" })
     //  QAnnouncement.announcement is a generated Q type querydsl generates for our classes
-    //  announcementService.queryDsl(pageNo, pageSize, predicates, QAnnouncement.announcement, orderSpecifiers);
-
-    //predicates.add(QAnnouncement.announcement.isShow.eq(true)) -> example of predicates added (queryDsl adds this for all our entities and all their fields)
+   
+    //predicates.add(QAnnouncement.announcement.isShow.eq(true)) -> example of queryDsl predicate
 
     // orderSpecifiers.add(QAnnouncement.announcement.createTime.desc()); -> example of predicates added (queryDsl adds this for all our entities and all their fields)
     public PageResult<E> queryDsl(Integer pageNo, Integer pageSize, List<Predicate> predicateList, EntityPathBase<E> entityPathBase, List<OrderSpecifier<?>> orderSpecifierList) {
@@ -128,7 +127,7 @@ public class BaseService<E, D extends BaseDao<E>> {
         List<Map<String, Object>> list = new LinkedList<>();// return result
         // Package result
         for (int i = 0; i < tuples.size(); i++) {
-            //遍历tuples        Traversing tuples
+            //tuples        Traversing tuples
             Map<String, Object> map = new LinkedHashMap<>();// a message
             for (Expression expression : expressions) {
                 map.put(expression.toString().split(" as ")[1],//   Name as Key
