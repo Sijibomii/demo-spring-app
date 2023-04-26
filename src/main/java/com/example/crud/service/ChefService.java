@@ -103,6 +103,17 @@ public class ChefService extends BaseService<Chef, ChefDao>  {
     // using the @Query annotation (check chef Dao)
     
     // get all pagination
+    public PageResult<Chef> allActiveChefs(Integer pageNo, Integer pageSize){
+        List<Predicate> predicates = new ArrayList<>(); 
+        predicates.add(QChef.chef.is_active.eq(true));
+
+        //specify ordering
+        List<OrderSpecifier<?>> orderSpecifiers = new ArrayList<>();
+        orderSpecifiers.add(QChef.chef.createdOn.desc());
+
+        PageResult<Chef> pageResult = queryDsl(pageNo, pageSize, predicates, QChef.chef, orderSpecifiers);
+        return pageResult;
+    }
 
 
     // use criteria classes(pagination to create queries)

@@ -8,7 +8,6 @@ import org.hibernate.criterion.MatchMode;
 public class Restrictions {
 
     /**
-     * 等于
      * @param fieldName
      * @param value
      * @param ignoreNull
@@ -24,7 +23,6 @@ public class Restrictions {
     }
 
     /**
-     * 不等于NULL
      * @param fieldName
      * @param value
      * @param ignoreNull
@@ -35,7 +33,6 @@ public class Restrictions {
     }
 
     /**
-     * 不等于
      * @param fieldName
      * @param value
      * @param ignoreNull
@@ -49,7 +46,6 @@ public class Restrictions {
     }
 
     /**
-     * 模糊匹配
      * @param fieldName
      * @param value
      * @param ignoreNull
@@ -78,7 +74,6 @@ public class Restrictions {
     }
 
     /**
-     * 大于
      * @param fieldName
      * @param value
      * @param ignoreNull
@@ -92,7 +87,6 @@ public class Restrictions {
     }
 
     /**
-     * 小于
      * @param fieldName
      * @param value
      * @param ignoreNull
@@ -106,7 +100,6 @@ public class Restrictions {
     }
 
     /**
-     * 大于等于
      * @param fieldName
      * @param value
      * @param ignoreNull
@@ -120,7 +113,6 @@ public class Restrictions {
     }
 
     /**
-     * 小于等于
      * @param fieldName
      * @param value
      * @param ignoreNull
@@ -133,28 +125,15 @@ public class Restrictions {
         return new SimpleExpression (fieldName, value, Criterion.Operator.GTE);
     }
 
-    // /**
-    //  * 并且
-    //  * @param pageCriteria
-    //  * @return
-    //  */
+    
     // public static LogicalExpression and(Criterion... pageCriteria){
     //     return new LogicalExpression(pageCriteria, Criterion.Operator.AND);
     // }
-    // /**
-    //  * 或者
-    //  * @param pageCriteria
-    //  * @return
-    //  */
+   
     // public static LogicalExpression or(Criterion... pageCriteria){
     //     return new LogicalExpression(pageCriteria, Criterion.Operator.OR);
     // }
-    // /**
-    //  * 包含于
-    //  * @param fieldName
-    //  * @param value
-    //  * @return
-    //  */
+    
     // @SuppressWarnings("rawtypes")
     // public static LogicalExpression in(String fieldName, Collection value, boolean ignoreNull) {
     //     if(ignoreNull&&(value==null||value.isEmpty())){

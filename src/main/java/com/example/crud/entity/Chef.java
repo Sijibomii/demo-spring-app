@@ -45,6 +45,9 @@ public class Chef {
 
     @NotNull
     private boolean is_on_duty;
+    
+    @Column(columnDefinition = "boolean default false")
+    private boolean is_active;
 
     @NotNull
     @Column(unique = true)
