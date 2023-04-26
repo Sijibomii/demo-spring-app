@@ -132,7 +132,7 @@ public class ChefService extends BaseService<Chef, ChefDao>  {
         } else {
             list = jpaQuery.fetch();
         }
-        return new PageResult<>(list, jpaQuery.fetchCount());//添加总条数
+        return new PageResult<>(list, jpaQuery.fetchCount());
     }
 
     public Page<Chef> pageQuery(Integer pageNo, Integer pageSize) {

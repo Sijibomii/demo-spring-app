@@ -1,9 +1,14 @@
 package com.example.crud.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
-// import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.crud.controller.base.BaseController;
 import com.example.crud.entity.Chef;
@@ -12,12 +17,14 @@ import com.example.crud.service.ChefService;
 import com.example.crud.util.MessageResult;
 
 // all routes here: /api/chef/
+@RestController
+@RequestMapping("/api/chef")
 public class ChefController extends BaseController { 
+    //TODO: upgrade all PageResult to Page
+
 
     @Autowired
     private ChefService service;
-     
-    // TASK: USE THE queryDslForPageListResult(QueryDslContext qdc, Integer pageNo, Integer pageSize) OF THIS SIGNATURE 
 
     // get All chefs (paginated)
     @GetMapping("page")
@@ -28,5 +35,27 @@ public class ChefController extends BaseController {
         PageResult<Chef> pageResult = service.allActiveChefs(pageNo, pageSize);
         return success(pageResult);
     }
+    //get all by eatery id paginated
+    @GetMapping("eatry")
+    public MessageResult page(
+            @RequestParam(value = "pageNo", defaultValue = "1") Long eateryId,
+            @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize
+    ) {
+        Page<Chef> pageResult = service.findAllByEateryId(eateryId, pageNo, pageSize);
+        return success(pageResult);
+    }
+
+    @GetMapping("{id}")
+    public MessageResult getChefById(@PathVariable("id") Long id) {
+        Optional<Chef> chef = service.findByIdUingJPA(id);
+        if(!chef.isPresent()){
+            return error("Invalid Id");
+        }
+        return success(chef.get());
+    }
+
+
+
 }
  
