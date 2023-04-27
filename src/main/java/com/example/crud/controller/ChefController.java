@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -67,9 +68,11 @@ public class ChefController extends BaseController {
     }
 
     @PostMapping
-    public MessageResult addChef(@Valid Chef chef, BindingResult bindingResult){
+    // @Valid ??
+    public MessageResult addChef(@RequestBody Chef chef, BindingResult bindingResult){
         MessageResult result = BindingResultUtil.validate(bindingResult);
         if (result != null) { 
+            // System.out.println();
             return result; 
         }
         Chef one = service.findByUsername(chef.getUsername());

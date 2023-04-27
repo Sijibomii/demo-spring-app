@@ -1,0 +1,17 @@
+
+-- ----------------------------
+-- Table structure for `chef`
+-- ----------------------------
+DROP TABLE IF EXISTS CHEF;
+
+CREATE TABLE CHEF (
+  ID  SERIAL,
+  NAME varchar(255) NOT NULL, 
+  USERNAME varchar(255) NOT NULL, 
+  SALARY INT DEFAULT NULL,
+  IS_MALE BOOLEAN DEFAULT NULL, 
+  IS_ON_DUTY BOOLEAN DEFAULT NULL, 
+  IS_ACTIVE BOOLEAN DEFAULT NULL,
+  CREATED_ON TIMESTAMP NOT NULL,
+  PRIMARY KEY (ID)
+);

@@ -9,6 +9,7 @@ import org.apache.commons.logging.LogFactory;
 import javax.servlet.http.HttpServletRequest;
 
 public class BaseController {
+    @SuppressWarnings({"all"})
     private static Log log = LogFactory.getLog(BaseController.class);
 
     protected MessageResult success() { 
