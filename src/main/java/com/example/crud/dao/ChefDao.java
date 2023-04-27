@@ -24,6 +24,7 @@ public interface ChefDao extends BaseDao<Chef> {
 
     List<Chef> findAllByEatery(Eatery eatery);
 
+
     // using the @Query annotation
     @Query("select c from Chef c where c.meal = :meal and c.is_on_duty= :is_on_duty and c.username like :username and c.salary >= :salary order by createdOn ")
     List<Chef> findAllByMealUsernameSalary(

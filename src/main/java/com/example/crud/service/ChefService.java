@@ -41,7 +41,7 @@ import org.springframework.data.domain.PageRequest;
 public class ChefService extends BaseService<Chef, ChefDao>  {
     
     @Setter
-    protected ChefDao dao;
+    protected ChefDao dao; 
 
     public Optional<Chef> findByIdUingJPA(long id){
         return findById(specs.byId(id));
@@ -61,6 +61,21 @@ public class ChefService extends BaseService<Chef, ChefDao>  {
         Root<Chef> chef = query.from(Chef.class);
 
         query.where(builder.equal(chef.get("name"), name));
+        List<Chef> chef_list = entityManager
+            .createQuery(query)
+            .getResultList();
+        if (chef_list.size() < 1){
+            return null;
+        }
+        return chef_list.get(0);
+    }
+
+    public Chef findByUsername(String username){
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Chef> query = builder.createQuery(Chef.class);
+        Root<Chef> chef = query.from(Chef.class);
+
+        query.where(builder.equal(chef.get("username"), username));
         List<Chef> chef_list = entityManager
             .createQuery(query)
             .getResultList();
