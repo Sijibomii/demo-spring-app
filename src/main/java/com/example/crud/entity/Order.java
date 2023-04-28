@@ -8,7 +8,7 @@ import com.example.crud.constants.OrderStatus;
 
 @Entity
 @Data
-@Table
+@Table(name = "Orders")
 public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

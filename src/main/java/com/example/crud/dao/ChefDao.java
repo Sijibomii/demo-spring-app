@@ -5,7 +5,7 @@ import com.example.crud.entity.Chef;
 import com.example.crud.entity.Meal;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.domain.Specification;
-import com.example.crud.entity.Chef_;
+import com.example.crud.entity.Chef_; 
 import com.example.crud.entity.Eatery;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
