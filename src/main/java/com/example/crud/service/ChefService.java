@@ -28,6 +28,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 
 import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.data.domain.Pageable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Sort;
@@ -40,8 +41,12 @@ import org.springframework.data.domain.PageRequest;
 @Service
 public class ChefService extends BaseService<Chef, ChefDao>  {
     
-    @Setter
+    @Autowired
     protected ChefDao dao; 
+
+    public Chef save(Chef chef) {
+        return dao.save(chef);
+    }
 
     public Optional<Chef> findByIdUingJPA(long id){
         return findById(specs.byId(id));

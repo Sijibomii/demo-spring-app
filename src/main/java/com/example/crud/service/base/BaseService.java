@@ -156,7 +156,7 @@ public class BaseService<E, D extends BaseDao<E>> {
     } 
 
     public E save(E e) {
-        return (E) dao.save(e);
+        return (E) dao.save(e); 
     }
 
     public long count(){

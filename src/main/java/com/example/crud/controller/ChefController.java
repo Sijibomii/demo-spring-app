@@ -78,7 +78,7 @@ public class ChefController extends BaseController {
         Chef one = service.findByUsername(chef.getUsername());
         if (one != null) { 
             return error(messageSource.getMessage("COIN_NAME_EXIST"));
-        }
+        } 
         service.save(chef);
         return success(); 
     }
