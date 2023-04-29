@@ -10,7 +10,6 @@ import com.example.crud.entity.QEatery;
 import com.example.crud.constants.PageModel;
 import com.example.crud.dao.ChefDao;
 import com.example.crud.service.base.BaseService;
-import lombok.Setter;
 import java.util.Optional;
 import com.example.crud.dao.ChefDao.specs;
 import javax.persistence.criteria.*;

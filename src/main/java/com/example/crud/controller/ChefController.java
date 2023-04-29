@@ -19,9 +19,7 @@ import com.example.crud.pagination.PageResult;
 import com.example.crud.service.ChefService;
 import com.example.crud.service.helper.LocaleMessageSourceService;
 import com.example.crud.util.BindingResultUtil;
-import com.example.crud.util.MessageResult;
-
-import javax.validation.Valid;
+import com.example.crud.util.MessageResult; 
 
 
 // all routes here: /api/chef/
@@ -58,6 +56,7 @@ public class ChefController extends BaseController {
         
         return success(pageResult);
     } 
+
     //get all by eatery id paginated
     @GetMapping("eatry")
     public MessageResult page(
@@ -88,7 +87,7 @@ public class ChefController extends BaseController {
         }
         Chef one = service.findByUsername(chef.getUsername());
         if (one != null) { 
-            return error(messageSource.getMessage("COIN_NAME_EXIST"));
+            return error(messageSource.getMessage("CHEF EXIST"));
         } 
         service.save(chef);
         return success(); 
