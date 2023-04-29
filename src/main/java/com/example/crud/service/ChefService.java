@@ -48,6 +48,11 @@ public class ChefService extends BaseService<Chef, ChefDao>  {
         return dao.save(chef);
     }
 
+    public PageResult<Chef> allChefs(Integer pageNo, Integer pageSize){
+        List<Chef> chefs = dao.findAll();
+        return new PageResult<Chef>(chefs, pageNo, pageSize, new Long(chefs.size()));
+    }
+
     public Optional<Chef> findByIdUingJPA(long id){
         return findById(specs.byId(id));
     }
@@ -129,7 +134,7 @@ public class ChefService extends BaseService<Chef, ChefDao>  {
 
         //specify ordering
         List<OrderSpecifier<?>> orderSpecifiers = new ArrayList<>();
-        orderSpecifiers.add(QChef.chef.createdOn.desc());
+        orderSpecifiers.add(QChef.chef.createdOn.desc()); 
 
         PageResult<Chef> pageResult = queryDsl(pageNo, pageSize, predicates, QChef.chef, orderSpecifiers);
         return pageResult;

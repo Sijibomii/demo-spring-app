@@ -40,13 +40,24 @@ public class ChefController extends BaseController {
 
     // get All chefs (paginated)
     @GetMapping("page")
-    public MessageResult page(
+    public MessageResult pageAll(
+            @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize
+    ) {
+        PageResult<Chef> pageResult = service.allChefs(pageNo, pageSize);
+
+        return success(pageResult);
+    } 
+
+    @GetMapping("page/active")
+    public MessageResult pageActive(
             @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize
     ) {
         PageResult<Chef> pageResult = service.allActiveChefs(pageNo, pageSize);
+        
         return success(pageResult);
-    }
+    } 
     //get all by eatery id paginated
     @GetMapping("eatry")
     public MessageResult page(

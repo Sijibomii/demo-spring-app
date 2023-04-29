@@ -13,7 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
-
+import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @Data
 @Table
@@ -54,6 +54,7 @@ public class Chef {
     private String username;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @CreationTimestamp
     private Date createdOn;
     
 }

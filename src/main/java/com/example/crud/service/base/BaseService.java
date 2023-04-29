@@ -75,6 +75,7 @@ public class BaseService<E, D extends BaseDao<E>> {
         } else {
             list = jpaQuery.fetch();
         }
+        System.out.println(list);
         return new PageResult<>(list, pageNo, pageSize, jpaQuery.fetchCount());
     }
 
