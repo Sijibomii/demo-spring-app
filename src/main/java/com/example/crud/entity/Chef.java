@@ -37,8 +37,9 @@ public class Chef {
     private Eatery eatery; 
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY )
     @JoinColumn(name="meal_id")
+    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private Meal meal;
 
     private double salary;

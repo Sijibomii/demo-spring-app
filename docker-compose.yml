@@ -4,6 +4,7 @@ services:
   database:
     container_name: pg-database
     image: postgres:13-alpine
+    command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]
     environment:
       - POSTGRES_USER=demo
       - POSTGRES_PASSWORD=demo

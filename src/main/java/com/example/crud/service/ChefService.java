@@ -125,13 +125,13 @@ public class ChefService extends BaseService<Chef, ChefDao>  {
         return chef;
     }
 
-    public Chef setEatery(Chef ch, Eatery eatery){
+    public Chef setEatery(Chef ch, Eatery eatery){ 
         ch.setEatery(eatery);
         Chef chef  = dao.save(ch);
         return chef;
     }
     // using the @Query annotation (check chef Dao)
-    
+     
     // get all pagination
     public PageResult<Chef> allActiveChefs(Integer pageNo, Integer pageSize){
         List<Predicate> predicates = new ArrayList<>(); 
@@ -216,7 +216,7 @@ public class ChefService extends BaseService<Chef, ChefDao>  {
     
     // HOW ENTITY PATH AND EXPRESSION ARE BEEN USED. HOW queryDslForPageListResult IS BEEN USED(CHECK BASESERVICE)
     @SuppressWarnings({"all"})
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true) 
     public void test() {
         // query field
         // it refused to take Expression so I had to sprecify a string expression
@@ -229,12 +229,12 @@ public class ChefService extends BaseService<Chef, ChefDao>  {
         entityPaths.add(QEatery.eatery);
         // predicates: https://www.youtube.com/watch?v=pYx__ixuxGk
         List<Predicate> predicates = new ArrayList<>();
-        predicates.add(QChef.chef.eatery.eq(QEatery.eatery));
+        predicates.add(QChef.chef.eatery.eq(QEatery.eatery));   
 
         List<OrderSpecifier> orderSpecifierList = new ArrayList<>();
         orderSpecifierList.add(QChef.chef.id.desc());
         PageListMapResult pageListMapResult = super.queryDslForPageListResult(expressions, entityPaths, predicates, orderSpecifierList, Integer.valueOf(1), Integer.valueOf(10));
-        System.out.println(pageListMapResult);
+        System.out.println(pageListMapResult); 
     }
 
     // using boolean expression

@@ -2,6 +2,8 @@ package com.example.crud.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +29,6 @@ public class EateryController extends BaseController {
     public MessageResult addEatery(@RequestBody Eatery eatery, BindingResult bindingResult){
         MessageResult result = BindingResultUtil.validate(bindingResult);
         if (result != null) { 
-            // System.out.println();
             return result; 
         }
         Eatery one = service.findByName(eatery.getName());
@@ -38,15 +39,12 @@ public class EateryController extends BaseController {
         return success(ret); 
     }
 
-    // @GetMapping("page")
-    // public MessageResult pageAll(
-    //         @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
-    //         @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize
-    // ) {
-    //     PageResult<Chef> pageResult = service.allChefs(pageNo, pageSize);
 
-    //     return success(pageResult);
-    // }
+    // get eatery and all chefs by eateryid
+    @GetMapping("{id}")
+    public MessageResult getEateryById(@PathVariable("id") Long id) {
+        return success(service.getEateryDetailsById(id));
+    }
 
     
 }

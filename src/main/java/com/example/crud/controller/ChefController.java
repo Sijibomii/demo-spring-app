@@ -42,23 +42,26 @@ public class ChefController extends BaseController {
     private LocaleMessageSourceService messageSource;
 
     // get All chefs (paginated)
-    @GetMapping("page")
+   
+
+    @GetMapping("active") 
+    public MessageResult pageActive(
+            @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize
+    ) {
+        // error been caused by the fact that I added eatery in some chefs
+        PageResult<Chef> pageResult = service.allActiveChefs(pageNo, pageSize); 
+        
+        return success(pageResult);
+    } 
+
+    @GetMapping
     public MessageResult pageAll(
             @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize
     ) {
         PageResult<Chef> pageResult = service.allChefs(pageNo, pageSize);
 
-        return success(pageResult);
-    } 
-
-    @GetMapping("page/active")
-    public MessageResult pageActive(
-            @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
-            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize
-    ) {
-        PageResult<Chef> pageResult = service.allActiveChefs(pageNo, pageSize); 
-        
         return success(pageResult);
     } 
 
@@ -110,6 +113,7 @@ public class ChefController extends BaseController {
         Chef new_obj = service.setEatery(chef_obj, eatery);
         return success(new_obj); 
     }
+
 
 
 }

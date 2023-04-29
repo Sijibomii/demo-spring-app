@@ -68,6 +68,7 @@ public class BaseService<E, D extends BaseDao<E>> {
         if (orderSpecifierList != null && orderSpecifierList.size() > 0) {
             jpaQuery.orderBy(orderSpecifierList.toArray(new OrderSpecifier[orderSpecifierList.size()]));
         }
+       
         //
         if (pageNo != null && pageSize != null) {
             // filter by page number and page size
@@ -75,7 +76,7 @@ public class BaseService<E, D extends BaseDao<E>> {
         } else {
             list = jpaQuery.fetch();
         }
-        System.out.println(list);
+        // System.out.println(list);
         return new PageResult<>(list, pageNo, pageSize, jpaQuery.fetchCount());
     }
 
@@ -111,14 +112,7 @@ public class BaseService<E, D extends BaseDao<E>> {
             List<OrderSpecifier> orderSpecifierList,
             Integer pageNo,
             Integer pageSize) {
-                //////////////////////////////////////////////////////
-                // Tuple defines an interface for generic query result projection
-                // List<Tuple> result = query.from(employee).select(employee.firstName, employee.lastName).fetch();
-                // for (Tuple row : result) {
-                //     System.out.println("firstName " + row.get(employee.firstName));
-                //     System.out.println("lastName " + row.get(employee.lastName));
-                // }
-                ////////////////////////////////////////////////////////////
+               
         JPAQuery<Tuple> jpaQuery = queryFactory.select(expressions.toArray(new Expression[expressions.size()]))
                 .from(entityPaths.toArray(new EntityPath[entityPaths.size()]))
                 .where(predicates.toArray(new Predicate[predicates.size()]));
