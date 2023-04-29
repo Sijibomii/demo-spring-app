@@ -23,6 +23,14 @@ public class EateryService extends BaseService<Eatery, EateryDao>{
         return dao.save(eatery);
     }
 
+    public Eatery getById(Long id){
+        Boolean exist = dao.existsById(id);
+        if(exist){
+            return dao.getReferenceById(id);
+        }
+        return null;
+    }
+
     public Eatery findByName(String name){
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Eatery> query = builder.createQuery(Eatery.class);

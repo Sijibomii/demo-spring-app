@@ -22,8 +22,8 @@ public class BaseController {
 
     protected MessageResult success(String msg, Object obj) {
         MessageResult mr = new MessageResult(0, msg);
-        mr.setData(obj);
-        return mr;
+        mr.setData(obj); 
+        return mr; 
     }
 
     protected MessageResult success(Object obj) {

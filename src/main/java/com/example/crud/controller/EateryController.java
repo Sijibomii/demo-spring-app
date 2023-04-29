@@ -38,5 +38,15 @@ public class EateryController extends BaseController {
         return success(ret); 
     }
 
+    // @GetMapping("page")
+    // public MessageResult pageAll(
+    //         @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
+    //         @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize
+    // ) {
+    //     PageResult<Chef> pageResult = service.allChefs(pageNo, pageSize);
+
+    //     return success(pageResult);
+    // }
+
     
 }

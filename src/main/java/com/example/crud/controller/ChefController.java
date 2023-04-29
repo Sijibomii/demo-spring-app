@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.crud.controller.base.BaseController;
 import com.example.crud.entity.Chef;
+import com.example.crud.entity.Eatery;
 import com.example.crud.pagination.PageResult;
 import com.example.crud.service.ChefService;
+import com.example.crud.service.EateryService;
 import com.example.crud.service.helper.LocaleMessageSourceService;
 import com.example.crud.util.BindingResultUtil;
 import com.example.crud.util.MessageResult; 
@@ -32,6 +34,9 @@ public class ChefController extends BaseController {
 
     @Autowired
     private ChefService service;
+
+    @Autowired
+    private EateryService eateryService;
 
     @Autowired
     private LocaleMessageSourceService messageSource;
@@ -52,7 +57,7 @@ public class ChefController extends BaseController {
             @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize
     ) {
-        PageResult<Chef> pageResult = service.allActiveChefs(pageNo, pageSize);
+        PageResult<Chef> pageResult = service.allActiveChefs(pageNo, pageSize); 
         
         return success(pageResult);
     } 
@@ -93,6 +98,18 @@ public class ChefController extends BaseController {
         return success(); 
     }
 
+    // add chef to eatery
+    @PostMapping("addEatery")
+    public MessageResult addChefToEatery(@RequestParam Integer eateryId, @RequestParam Integer chefId){
+        Eatery eatery = eateryService.getById(Long.valueOf(eateryId));
+        Optional<Chef> chef = service.findByIdUingJPA(Long.valueOf(chefId));
+        if(!chef.isPresent()){
+            return error("Invalid Id");
+        }
+        Chef chef_obj= chef.get();
+        Chef new_obj = service.setEatery(chef_obj, eatery);
+        return success(new_obj); 
+    }
 
 
 }

@@ -124,6 +124,12 @@ public class ChefService extends BaseService<Chef, ChefDao>  {
         Chef chef  = dao.save(ch);
         return chef;
     }
+
+    public Chef setEatery(Chef ch, Eatery eatery){
+        ch.setEatery(eatery);
+        Chef chef  = dao.save(ch);
+        return chef;
+    }
     // using the @Query annotation (check chef Dao)
     
     // get all pagination
