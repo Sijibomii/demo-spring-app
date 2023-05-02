@@ -9,6 +9,7 @@ import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import lombok.Data;
@@ -34,7 +35,7 @@ public class Meal {
 
     // AVOID BY-DIRECTIONAL MAPPING BECAUSE OF INCONSISTENCY SO ADD ON "manytoone" col only https://www.baeldung.com/hibernate-one-to-many
     // bidirectional mapping
-    @OneToMany(mappedBy = "meal", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Chef> comments = new ArrayList<>();
+    @ManyToMany(mappedBy = "meals")
+    private List<Chef> chefs;
 
 }

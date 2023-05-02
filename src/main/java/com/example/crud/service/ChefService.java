@@ -48,6 +48,13 @@ public class ChefService extends BaseService<Chef, ChefDao>  {
     }
 
     public PageResult<Chef> allChefs(Integer pageNo, Integer pageSize){
+        // return all chefs with all info using dto
+
+        // get eatery details and add to dto
+
+        // get all meals by chef and add to dto
+
+        // execute single sql query that will return the fields in this form
         List<Chef> chefs = dao.findAll();
         return new PageResult<Chef>(chefs, pageNo, pageSize, new Long(chefs.size()));
     }

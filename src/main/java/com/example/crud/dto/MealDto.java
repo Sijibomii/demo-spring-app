@@ -1,6 +1,5 @@
 package com.example.crud.dto;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -8,9 +7,11 @@ import lombok.Data;
 @AllArgsConstructor
 public class MealDto {
     
-    private String name;
+    private Long id;
 
     private double price;
 
-    private List<ChefDto> chefs;
+    private String name;
+
+    private boolean isAvailable;
 }

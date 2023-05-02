@@ -8,14 +8,10 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class EateryFullDto {
+public class EateryDto {
     private Long id;
 
     private String name;
 
     private String address;
-
-    private Chef manager;
-
-    private List<Chef> chefs;
 }

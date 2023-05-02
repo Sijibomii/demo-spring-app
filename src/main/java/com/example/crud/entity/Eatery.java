@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Data;
 
 @Entity
@@ -31,6 +33,8 @@ public class Eatery {
     @OneToOne
     private Chef manager;
 
-    @OneToMany(mappedBy="eatery")
-    private List<Chef> chefs;
+
+    // @JsonManagedReference
+    // @OneToMany(mappedBy="eatery")
+    // private List<Chef> chefs;
 }

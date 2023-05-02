@@ -11,10 +11,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.FetchType;
 import java.util.Date;
+import java.util.List;
+
 import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @Data
@@ -31,17 +35,21 @@ public class Chef {
     // multiple chefs in an eatery
     // this means we are only able to access the eatery associated with a chef from the chef entity
     // if we want to be able to access the chef associated with a eatry we use a onetomany mappring and make it bi directional
-    @ManyToOne(fetch = FetchType.LAZY )
+    // @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="eatery_id")
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private Eatery eatery; 
 
 
-    @ManyToOne(fetch = FetchType.LAZY )
-    @JoinColumn(name="meal_id")
+    @ManyToMany()
+    @JoinTable(
+        name = "chef_meals", 
+        joinColumns = @JoinColumn(name = "meal_id"), 
+        inverseJoinColumns = @JoinColumn(name = "chef_id"))
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
-    private Meal meal;
-
+    private List<Meal> meals;
+ 
     private double salary;
  
     @NotNull
